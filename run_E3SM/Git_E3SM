@@ -1,5 +1,5 @@
-git clone https://github.com/E3SM-Project/E3SM.git e3sm_trial
-cd e3sm_trial
+git clone https://github.com/E3SM-Project/E3SM.git e3sm_src
+cd e3sm_src
 git fetch origin
 git checkout origin/master
 git submodule update --init --recursive
