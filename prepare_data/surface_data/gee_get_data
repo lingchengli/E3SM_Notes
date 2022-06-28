@@ -1,0 +1,279 @@
+//download surface data for ICOM study in E3SM land model
+//2021-12
+
+//define ROI -125W to -104W; 32N to 50N (21 degree, 18degree)
+var regions = 
+ee.Geometry.Polygon(
+[[[-81.5, 45.5],
+  [-81.5, 36.5],
+  [-66.5, 36.5],
+  [-66.5, 45.5]]], null, false); 
+
+//define resolution
+//Latitude:  1 deg = 110.574 km
+//Longitude: 1 deg = 111.320*cos(latitude) km
+
+//var dimension = '3000x1600'; // = 0.005 degree ~ 500 m 
+//var dimension = '190x150'; //  = lon 0.08, lat 0.054 ; lat 0.06~6km; long, 0.08 degree ~ 6 km 
+          
+// ************** LAI **************// 
+
+
+// var LAIData = ee.ImageCollection("MODIS/061/MCD15A3H").filterDate('2003-01-01','2021-12-31');
+// for (var month = 1; month < 13; month++) {
+//   var LAIs = LAIData
+//       .filter(ee.Filter.calendarRange(month,month,'month'));
+//   var LAIs = LAIs.mean().select('Lai')
+    
+//   Export.image.toDrive({
+//       image: LAIs,
+//       description: 'LAI_' + month.toString(),
+//       scale: 500, //dimensions: dimension,
+//       folder: 'ICoM',
+//       fileFormat: 'GeoTIFF',
+//       maxPixels:1e13,
+//       region: regions,
+//       crs: 'EPSG:4326'
+//     });
+//   }
+
+
+// // ************** World Climate data **************//
+// var WORLDCLIMs = ee.ImageCollection("WORLDCLIM/V1/MONTHLY");
+
+//   for (var month = 1; month < 13; month++) {
+      
+//     var WORLDCLIM = WORLDCLIMs
+//         .filter(ee.Filter.eq("month", month));
+  
+//     var WORLDCLIM = WORLDCLIM.first();
+    
+//     Export.image.toDrive({
+//       image: WORLDCLIM.select('tavg', 'tmin', 'tmax', 'prec'),
+//       description: 'WorldClim_' + month.toString(),
+//       scale: 500, //dimensions: dimension,
+//       folder: 'ICoM',
+//       fileFormat: 'GeoTIFF',
+//       maxPixels:1e13,
+//       region: regions,
+//       crs: 'EPSG:4326'
+//     });
+// }
+
+// // ************** soilgrid v2 data **************//
+
+// var image_bd   = ee.Image("projects/soilgrids-isric/bdod_mean");
+// var image_clay = ee.Image("projects/soilgrids-isric/clay_mean");
+// var image_ocd  = ee.Image("projects/soilgrids-isric/ocd_mean");
+// var image_sand = ee.Image("projects/soilgrids-isric/sand_mean");
+// var image_silt = ee.Image("projects/soilgrids-isric/silt_mean");
+// var image_soc  = ee.Image("projects/soilgrids-isric/soc_mean");
+
+    
+// Export.image.toDrive({
+//   image: image_bd,
+//   description: 'bd',
+//   scale: 500, //dimensions: dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+// Export.image.toDrive({
+//   image: image_clay,
+//   description: 'clay',
+//   scale: 500, //dimensions: dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+// Export.image.toDrive({
+//   image: image_ocd,
+//   description: 'ocd',
+//   scale: 500, //dimensions: dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+// Export.image.toDrive({
+//   image: image_sand,
+//   description: 'sand',
+//   scale: 500, //dimensions: dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+// Export.image.toDrive({
+//   image: image_silt,
+//   description: 'silt',
+//   scale: 500, //dimensions: dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+// Export.image.toDrive({
+//   image: image_soc,
+//   description: 'soc',
+//   scale: 500, //dimensions: dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+// // ************** Topography **************//
+// var elevation = ee.Image('CGIAR/SRTM90_V4').toDouble();
+// var terrain = ee.Algorithms.Terrain(elevation);
+// var slope1 = terrain.select('slope').toDouble();
+// //var aspect = terrain.select('aspect').toDouble();
+// //var terrainPars = ee.Image.cat([elevation, slope, aspect]);
+
+// var slope2 = ee.Terrain.slope(elevation);
+
+
+// Export.image.toDrive({
+//   image: elevation,
+//   description: 'mean_of_Elevation',
+//   scale: 500, //dimensions: dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+// Export.image.toDrive({
+//   image: slope1,
+//   description: 'slope1',
+//   scale: 500, //dimensions: dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+// Export.image.toDrive({
+//   image: slope2,
+//   description: 'slope2',
+//   scale: 500, //dimensions: dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+
+// var elevation_std = elevation.reduceResolution({
+//     reducer: ee.Reducer.stdDev(),
+//     maxPixels: 65535
+//     })
+
+// Export.image.toDrive({
+//   image: elevation_std,
+//   description: 'std_of_Elevation',
+//   scale: 500, //dimensions:  dimension,
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions,
+//   crs: 'EPSG:4326'
+// });
+
+
+
+
+
+// var regions2 =
+// ee.Geometry.Polygon(
+// [[[-126, 51],
+//     [-126, 31],
+//     [-103, 31],
+//     [-103, 51]]], null, false); 
+    
+// Export.image.toDrive({
+//   image: elevation,
+//   description: 'mean_of_Elevation_larger_ROI',
+//   dimensions: '2760x2400',
+//   folder: 'ICoM',
+//   fileFormat: 'GeoTIFF',
+//   maxPixels:1e13,
+//   region: regions2,
+//   crs: 'EPSG:4326'
+// });
+    
+
+// ************** land cover **************//
+
+var year = 2005;
+
+var LCs0 =ee.ImageCollection("MODIS/006/MCD12Q1")
+                      .filter(ee.Filter.calendarRange(year,year,'year'))
+                      .filterBounds(regions);
+
+//  LC_type 5 //     
+var LCs = LCs0.first().select('LC_Type5')
+// print(LCs)
+Export.image.toDrive({
+  image: LCs,
+  description: 'LC_' + year.toString() + '_C5',
+  scale: 500, //dimensions: dimension,
+  folder: 'ICoM',
+  fileFormat: 'GeoTIFF',
+  maxPixels:1e13,
+  region: regions,
+  crs: 'EPSG:4326'
+});
+
+var LCs_mode = LCs.reduceResolution({
+    reducer: ee.Reducer.mode(),
+    maxPixels: 65535
+    })
+
+Export.image.toDrive({
+  image: LCs_mode,
+  description: 'LC_' + year.toString() + '_mode_C5',
+  scale: 500, //dimensions: dimension,
+  folder: 'ICoM',
+  fileFormat: 'GeoTIFF',
+  maxPixels:1e13,
+  region: regions,
+  crs: 'EPSG:4326'
+});
+
+//  LC_type 1  //
+var LCs = LCs0.first().select('LC_Type5')
+// print(LCs)
+
+var LCs_mode = LCs.reduceResolution({
+    reducer: ee.Reducer.mode(),
+    maxPixels: 65535
+    })
+
+Export.image.toDrive({
+  image: LCs_mode,
+  description: 'LC_' + year.toString() + '_mode_C5',
+  scale: 500, //dimensions: dimension,
+  folder: 'ICoM',
+  fileFormat: 'GeoTIFF',
+  maxPixels:1e13,
+  region: regions,
+  crs: 'EPSG:4326'
+});
+
